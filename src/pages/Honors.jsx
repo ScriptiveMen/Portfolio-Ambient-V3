@@ -2,16 +2,11 @@ import GlowText from "../components/GlowText";
 
 const honors = [
     {
-        title: "Frontend Hackathon",
+        title: "Job Ready Hackathon: Frontend",
         position: "Participant",
         year: 2025,
-        certificate: "",
-    },
-    {
-        title: "Coding Challenge Winner",
-        position: "1st Place",
-        year: 2024,
-        certificate: "https://example.com/certificate2.pdf",
+        certificate:
+            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient-V3/Job%20Ready%20Frontend%20Hackathon%20?updatedAt=1761819130573",
     },
 ];
 

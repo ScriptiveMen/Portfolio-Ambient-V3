@@ -19,30 +19,6 @@ const projectsData = [
         title: "k72 Web UI",
         link: "https://k72-ca-frontend-ui.onrender.com",
     },
-    {
-        thumbnail:
-            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f517f25e691f150e0c3e10_eztFce5oR",
-        year: 2025,
-        role: "Full Stack",
-        title: "Coming Soon..",
-        link: "",
-    },
-    {
-        thumbnail:
-            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f517f25e691f150e0c3e10_eztFce5oR",
-        year: 2025,
-        role: "Backend",
-        title: "Coming Soon..",
-        link: "",
-    },
-    {
-        thumbnail:
-            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f517f25e691f150e0c3e10_eztFce5oR",
-        year: 2025,
-        role: "Frontend",
-        title: "Coming Soon..",
-        link: "",
-    },
 ];
 
 const Works = () => {
