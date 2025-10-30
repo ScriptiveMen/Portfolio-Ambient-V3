@@ -35,10 +35,10 @@ const About = () => {
                         <div className="w-full flex text-center flex-col gap-5 md:gap-10 items-center justify-center">
                             <div className="heading relative leading-none flex flex-col items-center justify-center">
                                 <div className="text relative pb-1">
-                                    <h1 className="md:text-[6vw] text-[19vw] font-[800] tracking-tight blur-[90px] saturate-[1] opacity-60 text-[#30E897] py-2">
+                                    <h1 className="md:text-[6vw] text-[19vw] select-none font-[800] tracking-tight blur-[90px] saturate-[1] opacity-60 text-[#30E897] py-2">
                                         Let's Build Together
                                     </h1>
-                                    <h1 className="absolute top-0 text-[19vw] md:text-[6vw] font-[800] tracking-tight bg-[url('/images/big-green-mask.jpg')] bg-clip-text text-transparent bg-cover bg-center py-2">
+                                    <h1 className="absolute top-0 text-[19vw] select-none md:text-[6vw] font-[800] tracking-tight bg-[url('/images/big-green-mask.jpg')] bg-clip-text text-transparent bg-cover bg-center py-2">
                                         Let's Build Together
                                     </h1>
                                 </div>

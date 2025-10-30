@@ -63,11 +63,10 @@ const Works = () => {
 
             currentRow.push(card);
 
-            // Pattern: 2 cards, 1 card, 2 cards, repeat...
             const shouldEndRow =
-                (rowIndex % 3 === 0 && currentRow.length === 2) || // First row: 2 cards
-                (rowIndex % 3 === 1 && currentRow.length === 1) || // Second row: 1 card
-                (rowIndex % 3 === 2 && currentRow.length === 2) || // Third row: 2 cards
+                (rowIndex % 3 === 0 && currentRow.length === 2) ||
+                (rowIndex % 3 === 1 && currentRow.length === 1) ||
+                (rowIndex % 3 === 2 && currentRow.length === 2) ||
                 index === projects.length - 1; // Last project
 
             if (shouldEndRow) {
