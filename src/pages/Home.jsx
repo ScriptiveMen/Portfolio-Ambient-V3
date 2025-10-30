@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import axios from "../utils/axios";
 
 const Home = () => {
     const [time, setTime] = useState(new Date());
@@ -11,17 +10,6 @@ const Home = () => {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, []);
-
-    const [resumeUrl, setResumeUrl] = useState(null);
-
-    useEffect(() => {
-        async function getResume() {
-            const res = await axios.get("/api/admin/resume");
-            setResumeUrl(res.data.resume.url);
-        }
-
-        getResume().catch((err) => {});
     }, []);
 
     const getGMTOffset = () => {

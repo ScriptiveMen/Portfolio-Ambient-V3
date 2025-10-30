@@ -1,30 +1,53 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 import GlowText from "../components/GlowText";
 import WorkCard from "../components/WorkCard";
-import EmptyState from "../components/EmptyState";
-import axios from "../utils/axios";
+
+const projectsData = [
+    {
+        thumbnail:
+            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f5172d5e691f150e0c3e06_qQdQBUnXE",
+        year: 2025,
+        role: "Full Stack",
+        title: "Orin AI Chatbot",
+        link: "https://orin-ai.onrender.com",
+    },
+    {
+        thumbnail:
+            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f517f25e691f150e0c3e10_eztFce5oR",
+        year: 2025,
+        role: "Frontend",
+        title: "k72 Web UI",
+        link: "https://k72-ca-frontend-ui.onrender.com",
+    },
+    {
+        thumbnail:
+            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f517f25e691f150e0c3e10_eztFce5oR",
+        year: 2025,
+        role: "Full Stack",
+        title: "Coming Soon..",
+        link: "",
+    },
+    {
+        thumbnail:
+            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f517f25e691f150e0c3e10_eztFce5oR",
+        year: 2025,
+        role: "Backend",
+        title: "Coming Soon..",
+        link: "",
+    },
+    {
+        thumbnail:
+            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f517f25e691f150e0c3e10_eztFce5oR",
+        year: 2025,
+        role: "Frontend",
+        title: "Coming Soon..",
+        link: "",
+    },
+];
 
 const Works = () => {
-    const [projects, setProjects] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const sectionRef = useRef(null);
     const imagesLoadedCountRef = useRef(0);
-
-    useEffect(() => {
-        const fetchProjects = async () => {
-            try {
-                const response = await axios.get("/api/admin/projects");
-                setProjects(response.data.projects);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProjects();
-    }, []);
 
     const handleImageLoaded = () => {
         imagesLoadedCountRef.current += 1;
@@ -33,7 +56,7 @@ const Works = () => {
             window.locomotiveScroll.update();
         }
 
-        if (imagesLoadedCountRef.current === projects.length) {
+        if (imagesLoadedCountRef.current === projectsData.length) {
             setTimeout(() => {
                 if (window.locomotiveScroll) {
                     window.locomotiveScroll.update();
@@ -49,10 +72,10 @@ const Works = () => {
 
         const rows = [];
         let currentRow = [];
+        let rowIndex = 0;
 
         projects.forEach((project, index) => {
             const card = {
-                _id: project._id,
                 wrapperClass: getWrapperClass(index),
                 image: project.thumbnail || "/images/comingsoon.webp",
                 year: project.year.toString(),
@@ -64,15 +87,20 @@ const Works = () => {
 
             currentRow.push(card);
 
-            if (
-                currentRow.length === 2 ||
-                (index === projects.length - 1 && currentRow.length > 0)
-            ) {
+            // Pattern: 2 cards, 1 card, 2 cards, repeat...
+            const shouldEndRow =
+                (rowIndex % 3 === 0 && currentRow.length === 2) || // First row: 2 cards
+                (rowIndex % 3 === 1 && currentRow.length === 1) || // Second row: 1 card
+                (rowIndex % 3 === 2 && currentRow.length === 2) || // Third row: 2 cards
+                index === projects.length - 1; // Last project
+
+            if (shouldEndRow) {
                 rows.push({
-                    rowClass: getRowClass(rows.length),
+                    rowClass: getRowClass(rowIndex),
                     cards: [...currentRow],
                 });
                 currentRow = [];
+                rowIndex++;
             }
         });
 
@@ -80,13 +108,18 @@ const Works = () => {
     };
 
     const getWrapperClass = (index) => {
-        const mod = index % 3;
+        const mod = index % 5;
+        // Pattern for 5 projects: large, small, medium, large, small
         if (mod === 0) {
             return "relative w-full md:w-[55%] aspect-[1/1] overflow-hidden rounded-3xl md:rounded-4xl";
         } else if (mod === 1) {
             return "relative w-full md:w-[32%] aspect-[5/5] overflow-hidden rounded-3xl md:rounded-4xl";
-        } else {
+        } else if (mod === 2) {
             return "relative w-full md:w-[50%] aspect-[1/1] overflow-hidden rounded-4xl";
+        } else if (mod === 3) {
+            return "relative w-full md:w-[55%] aspect-[2/2] overflow-hidden rounded-3xl md:rounded-4xl";
+        } else {
+            return "relative w-full md:w-[32%] aspect-[5/5] overflow-hidden rounded-3xl md:rounded-4xl";
         }
     };
 
@@ -101,7 +134,7 @@ const Works = () => {
         }
     };
 
-    const workData = transformProjectsToWorkData(projects);
+    const workData = transformProjectsToWorkData(projectsData);
 
     return (
         <div
@@ -118,24 +151,13 @@ const Works = () => {
                 <GlowText title={"Work Samples."} />
             </div>
 
-            {loading ? (
-                <EmptyState type="loading" />
-            ) : error ? (
-                <EmptyState type="error" message={error} />
-            ) : workData.length === 0 ? (
-                <EmptyState
-                    type="empty"
-                    message="No projects to showcase yet. Stay tuned!"
-                />
-            ) : (
-                workData.map((row, i) => (
-                    <div key={i} className={`row${i + 1} ${row.rowClass}`}>
-                        {row.cards.map((card) => (
-                            <WorkCard key={card._id} card={card} />
-                        ))}
-                    </div>
-                ))
-            )}
+            {workData.map((row, idx) => (
+                <div key={idx} className={`row${idx + 1} ${row.rowClass}`}>
+                    {row.cards.map((card, cardIdx) => (
+                        <WorkCard key={cardIdx} card={card} />
+                    ))}
+                </div>
+            ))}
         </div>
     );
 };

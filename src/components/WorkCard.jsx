@@ -1,6 +1,5 @@
 const WorkCard = ({ card }) => {
     const handleImageLoad = () => {
-        // Update Locomotive when image loads
         const scrollContainer = document.querySelector(
             "[data-scroll-container]"
         );
@@ -18,7 +17,7 @@ const WorkCard = ({ card }) => {
                 src={card.image}
                 alt={card.title}
                 onLoad={handleImageLoad}
-                onError={handleImageLoad} // Also update on error
+                onError={handleImageLoad}
             />
             <div className="details absolute bottom-3 left-3 md:bottom-5 md:left-5 flex flex-col items-start gap-1 md:gap-2">
                 <div className="px-2 py-1 text-xs md:px-3 md:py-1 select-none md:text-sm rounded-full text-black bg-white">

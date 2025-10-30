@@ -15,7 +15,6 @@ const AllPages = () => {
                 <Works />
                 <Skills />
                 <Honors />
-                {/* <Certifications /> */}
                 <About />
                 <Footer />
             </div>

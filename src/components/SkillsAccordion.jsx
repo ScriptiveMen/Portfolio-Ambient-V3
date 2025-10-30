@@ -1,6 +1,83 @@
-import axios from "../utils/axios";
 import { useEffect, useRef, useState } from "react";
-import EmptyState from "../components/EmptyState";
+
+const skillsData = [
+    {
+        _id: "1",
+        title: "AI and Generative AI",
+        icon: "ri-robot-2-line",
+        content: [
+            { section: "LangChain", _id: "1-1" },
+            { section: "LangGraph", _id: "1-2" },
+            { section: "LLMs", _id: "1-3" },
+            { section: "Retrieval-Augmented Generation (RAG)", _id: "1-4" },
+            { section: "MCP Server", _id: "1-5" },
+        ],
+    },
+    {
+        _id: "2",
+        title: "Frontend Development",
+        icon: "ri-javascript-line",
+        content: [
+            { section: "HTML, CSS, JavaScript", _id: "2-1" },
+            { section: "React.js", _id: "2-2" },
+            { section: "Redux Toolkit", _id: "2-3" },
+            { section: "Tailwind CSS", _id: "2-4" },
+            { section: "GSAP", _id: "2-5" },
+            { section: "PWA (Progressive Web Apps)", _id: "2-6" },
+            { section: "Ejs", _id: "2-7" },
+        ],
+    },
+    {
+        _id: "3",
+        title: "Backend Development",
+        icon: "ri-server-fill",
+        content: [
+            { section: "Node.js", _id: "3-1" },
+            { section: "Express.js", _id: "3-2" },
+            { section: "REST API Development", _id: "3-3" },
+            { section: "JWT Authentication", _id: "3-4" },
+            { section: "Socket.IO", _id: "3-5" },
+        ],
+    },
+    {
+        _id: "4",
+        title: "Databases & Vector Stores",
+        icon: "ri-database-2-fill",
+        content: [
+            { section: "MongoDB", _id: "4-1" },
+            { section: "Pinecone (Vector DB)", _id: "4-2" },
+            { section: "MySQL", _id: "4-3" },
+        ],
+    },
+    {
+        _id: "5",
+        title: "DevOps & Deployment",
+        icon: "ri-cloud-line",
+        content: [
+            { section: "Docker", _id: "5-1" },
+            { section: "Microservices Architecture", _id: "5-2" },
+            { section: "AWS (Amazon Web Services)", _id: "5-3" },
+        ],
+    },
+    {
+        _id: "6",
+        title: "Version Control",
+        icon: "ri-git-branch-line",
+        content: [{ section: "Git & Github", _id: "6-1" }],
+    },
+    {
+        _id: "7",
+        title: "Tools & Utilities",
+        icon: "ri-tools-fill",
+        content: [
+            { section: "Vercel", _id: "7-1" },
+            { section: "Render", _id: "7-2" },
+            { section: "Postman", _id: "7-3" },
+            { section: "Jest", _id: "7-4" },
+            { section: "Autocannon", _id: "7-5" },
+        ],
+    },
+];
 
 function AccordionItem({ skill }) {
     const [open, setOpen] = useState(false);
@@ -52,8 +129,8 @@ function AccordionItem({ skill }) {
                 }}
             >
                 <div className="pt-7">
-                    {skill.content.map((section, i) => (
-                        <div key={i} className="mb-3 w-[95%] m-auto">
+                    {skill.content.map((section, idx) => (
+                        <div key={idx} className="mb-3 w-[95%] m-auto">
                             <h3 className="text-white text-md md:text-2xl font-semibold">
                                 {section.section}
                             </h3>
@@ -66,61 +143,22 @@ function AccordionItem({ skill }) {
 }
 
 export default function SkillsAccordion() {
-    const [skills, setSkills] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [skills] = useState(skillsData);
 
+    // Update locomotive scroll on mount
     useEffect(() => {
-        async function getSkills() {
-            try {
-                const res = await axios.get("/api/admin/skills");
-                setSkills(res.data.skills);
-                setTimeout(() => {
-                    if (window.locomotiveScroll) {
-                        window.locomotiveScroll.update();
-                    }
-                }, 100);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        getSkills();
-    }, []);
-
-    // Add resize observer to update scroll on any content changes
-    useEffect(() => {
-        if (skills.length > 0 && window.locomotiveScroll) {
-            const updateScroll = () => {
+        setTimeout(() => {
+            if (window.locomotiveScroll) {
                 window.locomotiveScroll.update();
-            };
-
-            // Update scroll periodically when accordions might be animating
-            const interval = setInterval(updateScroll, 1000);
-
-            return () => clearInterval(interval);
-        }
-    }, [skills]);
-
-    if (loading) {
-        return <EmptyState type="loading" />;
-    }
-
-    if (error) {
-        return <EmptyState type="error" message={error} />;
-    }
-
-    if (skills.length === 0) {
-        return <EmptyState type="empty" message="Skills data coming soon!" />;
-    }
+            }
+        }, 100);
+    }, []);
 
     return (
         <div className="flex flex-col items-center py-10">
             <div className="w-full md:w-[90%] space-y-3">
-                {skills.map((skill, index) => (
-                    <AccordionItem key={index} skill={skill} />
+                {skills.map((skill, idx) => (
+                    <AccordionItem key={idx} skill={skill} />
                 ))}
             </div>
         </div>
