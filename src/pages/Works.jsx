@@ -5,7 +5,7 @@ import WorkCard from "../components/WorkCard";
 const projectsData = [
     {
         thumbnail:
-            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f5172d5e691f150e0c3e06_qQdQBUnXE",
+            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient-V3/Orin%20Ai%20Thumbnail?updatedAt=1761819795814",
         year: 2025,
         role: "Full Stack",
         title: "Orin AI Chatbot",
@@ -13,7 +13,7 @@ const projectsData = [
     },
     {
         thumbnail:
-            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient/68f517f25e691f150e0c3e10_eztFce5oR",
+            "https://ik.imagekit.io/mfac8dwut/Portfolio-Ambient-V3/K72%20Web%20UI%20Thumbnail%20?updatedAt=1761819825764",
         year: 2025,
         role: "Frontend",
         title: "k72 Web UI",
